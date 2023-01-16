@@ -31,7 +31,16 @@ export const handleEvolution: FastifyPluginAsync = async (app) => {
       const { month, subscriptionId } = request.query
 
       const sub = await getByMonthById(month, subscriptionId)
-      const prevSub = await getByMonthById(previousOf(month), subscriptionId)
+
+      const prevMonth = previousOf(month)
+      if (prevMonth === null) {
+        // No previous month, so the difference is the new MRR.
+        // E.g. from $0 to whatever the new MRR is.
+        reply.status(200).send({ difference: compute(sub).toString() })
+        return
+      }
+
+      const prevSub = await getByMonthById(prevMonth, subscriptionId)
 
       const difference = compute(sub).subtract(compute(prevSub))
 
