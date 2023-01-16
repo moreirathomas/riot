@@ -50,11 +50,11 @@ const subtract = (a: Money, b: Money): Money => {
 }
 
 const multiply = (a: Money, b: number): Money => {
-  return new Money(a.amount * b, a.currency)
+  return new Money(Math.round(a.amount * b), a.currency)
 }
 
 const divide = (a: Money, b: number): Money => {
-  return new Money(a.amount / b, a.currency)
+  return new Money(Math.round(a.amount / b), a.currency)
 }
 
 // E.g. 100 cents equals 1 USD.

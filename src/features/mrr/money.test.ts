@@ -34,8 +34,16 @@ describe('Money', () => {
       expect(new Money(100, 'usd').multiply(2).amount).toEqual(200)
     })
 
+    it('rounds when multiplying', () => {
+      expect(new Money(100, 'usd').multiply(1 / 3).amount).toEqual(33)
+    })
+
     it('divide', () => {
       expect(new Money(100, 'usd').divide(2).amount).toEqual(50)
+    })
+
+    it('rounds when dividing', () => {
+      expect(new Money(100, 'usd').divide(3).amount).toEqual(33)
     })
   })
 
