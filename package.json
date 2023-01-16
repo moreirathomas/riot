@@ -18,7 +18,7 @@
     "lint:fix": "eslint . --ext .ts --fix",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "jest src",
-    "test:unit-dev": "jest --watchAll --coverage",
+    "test:unit-dev": "jest src --watchAll --coverage",
     "test:e2e": "jest test/e2e"
   },
   "dependencies": {
