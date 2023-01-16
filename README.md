@@ -6,6 +6,107 @@
 
 # Riot Backend-challenge
 
+## Development
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en/) (>=18.0.0)
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+### Serve the app
+
+```bash
+npm run build
+npm run start
+```
+
+### Testing
+
+```bash
+npm run test
+```
+
+Will run all tests (unit and end-to-end).
+
+To run only unit tests:
+
+```bash
+npm run test:unit
+```
+
+To run only end-to-end tests:
+
+```bash
+npm run test:e2e
+```
+
+The end-to-end test will perform actual actions against the API and requires the server to be running.
+
+## API
+
+### Get the total MRR for a month
+
+```bash
+GET /mrr/total
+```
+
+#### Query parameters
+
+| Name       | Type     | Description                                                                        |
+| ---------- | -------- | ---------------------------------------------------------------------------------- |
+| `month`    | `string` | **Required**. The month to get. Any of `Jan 22`, `Feb 22` or `Mar 22`.             |
+| `currency` | `string` | **Required**. The currency to filter by result. Only supports `usd` at the moment. |
+
+#### HTTP response status codes
+
+| Status Code | Description         |
+| ----------- | ------------------- |
+| `200`       | OK.                 |
+| `400`       | Invalid parameters. |
+
+#### Response body
+
+```json
+{
+  "total": "$443.12"
+}
+```
+
+### Get the MRR evolution for a subscription between a month and the previous one (difference between the two)
+
+```bash
+GET /mrr/evolution
+```
+
+#### Query parameters
+
+| Name             | Type     | Description                                                            |
+| ---------------- | -------- | ---------------------------------------------------------------------- |
+| `month`          | `string` | **Required**. The month to get. Any of `Jan 22`, `Feb 22` or `Mar 22`. |
+| `subscriptionId` | `string` | **Required**. The subscription id.                                     |
+
+#### HTTP response status codes
+
+| Status Code | Description         |
+| ----------- | ------------------- |
+| `200`       | OK.                 |
+| `400`       | Invalid parameters. |
+
+#### Response body
+
+```json
+{
+  "difference": "-$47.88"
+}
+```
+
+## Original README
+
 Hi there!
 
 Since you got here, you're probably taking a part in our recruitment process for Back-end developer position, right?
@@ -21,16 +122,6 @@ Feel free to open an issue if you got any questions or suggestions! Once it's re
 Happy coding and cheers,
 
 Louis, CTO @ Riot
-
-## Table of Contents
-
-- [Riot Backend-challenge](#riot-backend-challenge)
-  - [Table of Contents](#table-of-contents)
-    - [Exercise : MRR Compute Service](#exercise--mrr-compute-service)
-      - [Problem](#problem)
-      - [API](#api)
-      - [Clarifications](#clarifications)
-      - [Example](#example)
 
 ### Exercise : MRR Compute Service
 
