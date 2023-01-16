@@ -5,6 +5,7 @@ import {
   parse,
   unwrap,
 } from './parser'
+import { Subscription } from '../../features/mrr/subscription'
 
 const URL = 'https://fake-subscriptions-api.fly.dev/api/subscriptions'
 
@@ -30,4 +31,16 @@ export async function getByMonth(month: Month): Promise<SubscriptionsResponse> {
     throw new Error(`No subscriptions found for month ${month}`)
   }
   return res
+}
+
+export async function getByMonthById(
+  month: Month,
+  id: string,
+): Promise<Subscription> {
+  const { subscriptions } = await getByMonth(month)
+  const subscription = subscriptions.find((s) => s.id === id)
+  if (!subscription) {
+    throw new Error(`No subscription found with id ${id}`)
+  }
+  return subscription
 }

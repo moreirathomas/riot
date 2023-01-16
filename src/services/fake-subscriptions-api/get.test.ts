@@ -1,4 +1,4 @@
-import { getAll, getByMonth } from './get'
+import { getAll, getByMonth, getByMonthById } from './get'
 
 describe('getAll', () => {
   it('returns the subscriptions for every available month', async () => {
@@ -17,4 +17,11 @@ describe('getByMonth', () => {
       expect(subscriptions.date).toBe(month)
     },
   )
+})
+
+describe('getByMonthById', () => {
+  it('returns the subscription with the given id', async () => {
+    const subscription = await getByMonthById('Jan 22', 'sub-1')
+    expect(subscription.id).toBe('sub-1')
+  })
 })

@@ -1,2 +1,2 @@
-export { getAll, getByMonth } from './get'
-export { MonthType } from './month'
+export { getAll, getByMonthById, getByMonth } from './get'
+export { MonthType, previousOf } from './month'
