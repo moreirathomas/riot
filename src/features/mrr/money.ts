@@ -33,19 +33,19 @@ export class Money {
   }
 }
 
-const assertSameCurrency = (a: Money, b: Money): void => {
-  if (a.currency !== b.currency) {
+export const assertSameCurrency = (a: Currency, b: Currency): void => {
+  if (a !== b) {
     throw new TypeError('Currencies must be the same')
   }
 }
 
 const add = (a: Money, b: Money): Money => {
-  assertSameCurrency(a, b)
+  assertSameCurrency(a.currency, b.currency)
   return new Money(a.amount + b.amount, a.currency)
 }
 
 const subtract = (a: Money, b: Money): Money => {
-  assertSameCurrency(a, b)
+  assertSameCurrency(a.currency, b.currency)
   return new Money(a.amount - b.amount, a.currency)
 }
 

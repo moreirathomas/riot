@@ -2,11 +2,11 @@ import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 import { Type } from '@sinclair/typebox'
 import { FastifyPluginAsync } from 'fastify'
 
-import { compute } from '../../features/mrr'
+import { computeMRR, subtractMMRs } from '../../features/mrr'
 import {
   getByMonthById,
   MonthType,
-  previousOf,
+  previousMonthOf,
 } from '../../services/fake-subscriptions-api'
 
 const query = Type.Object({
@@ -32,17 +32,17 @@ export const handleEvolution: FastifyPluginAsync = async (app) => {
 
       const sub = await getByMonthById(month, subscriptionId)
 
-      const prevMonth = previousOf(month)
+      const prevMonth = previousMonthOf(month)
       if (prevMonth === null) {
         // No previous month, so the difference is the new MRR.
         // E.g. from $0 to whatever the new MRR is.
-        reply.status(200).send({ difference: compute(sub).toString() })
+        reply.status(200).send({ difference: computeMRR(sub).toString() })
         return
       }
 
       const prevSub = await getByMonthById(prevMonth, subscriptionId)
 
-      const difference = compute(sub).subtract(compute(prevSub))
+      const difference = subtractMMRs(sub, prevSub)
 
       reply.status(200).send({ difference: difference.toString() })
     },

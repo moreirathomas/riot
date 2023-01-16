@@ -1,8 +1,8 @@
-import { Money } from './money'
+import { assertSameCurrency, Currency, Money } from './money'
 import { Subscription } from './subscription'
 
-export function compute(subscription: Subscription): Money {
-  if (subscription.status === 'canceled') {
+export function computeMRR(subscription: Subscription): Money {
+  if (isCanceled(subscription)) {
     return new Money(0, subscription.currency)
   }
 
@@ -19,5 +19,27 @@ export function compute(subscription: Subscription): Money {
   return monthly.subtract(discount)
 }
 
+const isCanceled = (sub: Subscription) => sub.status === 'canceled'
+
 const monthlyNumberOf = (interval: Subscription['interval']) =>
   interval === 'yearly' ? 12 : 1
+
+export function sumMRRs(
+  subscriptions: Subscription[],
+  currency: Currency,
+): Money {
+  return subscriptions
+    .filter(equalsCurrency(currency))
+    .map(computeMRR)
+    .reduce(sumMoney, new Money(0, currency))
+}
+
+const equalsCurrency = (currency: Currency) => (sub: Subscription) =>
+  sub.currency === currency
+
+const sumMoney = (acc: Money, val: Money) => acc.add(val)
+
+export function subtractMMRs(a: Subscription, b: Subscription): Money {
+  assertSameCurrency(a.currency, b.currency)
+  return computeMRR(a).subtract(computeMRR(b))
+}

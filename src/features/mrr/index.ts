@@ -1,2 +1,2 @@
-export { compute } from './compute'
+export { computeMRR, subtractMMRs, sumMRRs } from './compute'
 export { Money } from './money'

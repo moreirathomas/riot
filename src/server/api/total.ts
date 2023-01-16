@@ -1,7 +1,7 @@
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox'
 import { Type } from '@sinclair/typebox'
 
-import { compute, Money } from '../../features/mrr'
+import { sumMRRs } from '../../features/mrr'
 import { getByMonth, MonthType } from '../../services/fake-subscriptions-api'
 
 const query = Type.Object({
@@ -28,9 +28,7 @@ export const handleTotal: FastifyPluginAsyncTypebox = async (app) => {
       const { month, currency } = request.query
       const { subscriptions } = await getByMonth(month)
 
-      const total = subscriptions
-        .filter((sub) => sub.currency === currency)
-        .reduce((sum, sub) => sum.add(compute(sub)), new Money(0, currency))
+      const total = sumMRRs(subscriptions, currency)
 
       reply.status(200).send({ total: total.toString() })
     },

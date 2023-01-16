@@ -5,7 +5,7 @@ import { Type } from '@sinclair/typebox'
  */
 export type Month = `${'Jan' | 'Feb' | 'Mar'} ${'22'}`
 
-export const previousOf = (month: Month): Month | null => {
+export const previousMonthOf = (month: Month): Month | null => {
   switch (month) {
     case 'Jan 22':
       return null
