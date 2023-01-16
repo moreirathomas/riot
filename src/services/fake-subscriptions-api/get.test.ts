@@ -14,7 +14,7 @@ describe('getByMonth', () => {
     'returns the subscriptions for the given month (%s)',
     async (month) => {
       const subscriptions = await getByMonth(month)
-      expect(subscriptions[0].date).toBe(month)
+      expect(subscriptions.date).toBe(month)
     },
   )
 })
