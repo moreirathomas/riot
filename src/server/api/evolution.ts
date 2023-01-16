@@ -30,13 +30,10 @@ export const handleEvolution: FastifyPluginAsync = async (app) => {
     async (request, reply) => {
       const { month, subscriptionId } = request.query
 
-      const subOfMonth = await getByMonthById(month, subscriptionId)
-      const subOfMonthPrev = await getByMonthById(
-        previousOf(month),
-        subscriptionId,
-      )
+      const sub = await getByMonthById(month, subscriptionId)
+      const prevSub = await getByMonthById(previousOf(month), subscriptionId)
 
-      const difference = compute(subOfMonthPrev).subtract(compute(subOfMonth))
+      const difference = compute(sub).subtract(compute(prevSub))
 
       reply.status(200).send({ difference: difference.toString() })
     },
