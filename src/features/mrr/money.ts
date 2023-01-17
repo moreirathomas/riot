@@ -29,7 +29,7 @@ export class Money {
     return divide(this, b)
   }
   toString(): string {
-    return toString(convertInMinorUnits(this.amount), this.currency)
+    return toString(convertInMajorUnits(this.amount), this.currency)
   }
 }
 
@@ -58,10 +58,10 @@ const divide = (a: Money, b: number): Money => {
 }
 
 // E.g. 100 cents equals 1 USD.
-const MINOR_UNITS_PER_MAJOR_UNIT = 2
+const MINOR_UNITS_PER_MAJOR_UNIT = 100
 
-const convertInMinorUnits = (amount: number): number => {
-  return Math.round(amount) / 10 ** MINOR_UNITS_PER_MAJOR_UNIT
+const convertInMajorUnits = (amount: number): number => {
+  return Math.round(amount) / MINOR_UNITS_PER_MAJOR_UNIT
 }
 
 const toString = (amount: number, currency: Currency): string => {

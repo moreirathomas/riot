@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/moreirathomas/ts-backend-starter.git"
+    "url": "https://github.com/moreirathomas/riot.git"
   },
   "scripts": {
     "build": "tsc --build ./tsconfig.build.json",
